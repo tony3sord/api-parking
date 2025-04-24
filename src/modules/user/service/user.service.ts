@@ -12,14 +12,18 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const userName = await this.userRepository.getUserByUserName(
+    const userValidateUsername = await this.userRepository.getUserByUserName(
       createUserDto.username,
     );
-    const userEmail = await this.userRepository.getUserByEmail(
+    const userValidateEmail = await this.userRepository.getUserByEmail(
       createUserDto.email,
     );
-    if (userEmail || userName) {
-      throw new ConflictException('Email or Username already exists');
+    const userValidatePhone = await this.userRepository.getUserByPhone(
+      createUserDto.phone,
+    );
+
+    if (userValidateEmail || userValidateUsername || userValidatePhone) {
+      throw new ConflictException('Email,Phone or Username already exists');
     }
     return await this.userRepository.createUser(createUserDto);
   }
