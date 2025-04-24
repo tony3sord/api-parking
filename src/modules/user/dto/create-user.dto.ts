@@ -12,7 +12,7 @@ export class CreateUserDto {
 
   @ApiProperty({ description: 'El nombre de usuario del usuario.' })
   @IsString()
-  readonly user: string;
+  readonly username: string;
 
   @ApiProperty({ description: 'El correo del usuario.' })
   @IsEmail()
@@ -23,6 +23,6 @@ export class CreateUserDto {
   readonly password: string;
 
   @ApiProperty({ description: 'El rol del usuario.' })
-  @IsIn(['Admin', 'Client', 'SuperAdmin'])
-  readonly role: 'Admin' | 'Client' | 'SuperAdmin';
+  @IsIn(['Admin', 'Client', 'Worker'])
+  readonly role: 'Admin' | 'Client' | 'Worker';
 }
