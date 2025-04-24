@@ -18,4 +18,11 @@ export class UserRepository {
 
     return userRepository.save(usuarioNew);
   }
+
+  async getUsers(): Promise<User[]> {
+    return await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .getMany();
+  }
 }
