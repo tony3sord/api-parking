@@ -35,4 +35,37 @@ export class UserRepository {
     if (!user) throw new NotFoundException();
     return user;
   }
+
+  async updateUser(id: number, user: UpdateUserDto): Promise<User> {
+    const userRepository = this.dataSource.getRepository(User);
+    const userToUpdate = await userRepository
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id })
+      .getOne();
+
+    if (!userToUpdate) {
+      throw new Error('User not found');
+    }
+
+    if (user.name !== undefined) {
+      userToUpdate.name = user.name;
+    }
+
+    if (user.lastname !== undefined) {
+      userToUpdate.lastname = user.lastname;
+    }
+
+    if (user.email !== undefined) {
+      userToUpdate.email = user.email;
+    }
+
+    if (user.username !== undefined) {
+      userToUpdate.username = user.username;
+    }
+    if (user.role !== undefined) {
+      userToUpdate.role = user.role;
+    }
+
+    return await userRepository.save(userToUpdate);
+  }
 }
