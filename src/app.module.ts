@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { databaseProviders } from './common/database/typeorm.config';
 import { UserModule } from './modules/user/user.module';
 import { LoggerMiddleware } from './common/middleware/logs.middleware';
+import { LogModule } from './common/logs/logs.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { LoggerMiddleware } from './common/middleware/logs.middleware';
     TypeOrmModule.forRoot(databaseProviders.mongodb),
     ParkingModule,
     UserModule,
+    LogModule,
   ],
 })
 export class AppModule implements NestModule {
