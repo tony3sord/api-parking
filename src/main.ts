@@ -10,6 +10,14 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  await app.listen(process.env.PORT ?? 3000);
+
+  const port = process.env.PORT ?? 3000;
+  const server = await app.listen(port);
+
+  const address = server.address();
+
+  const host = address.address === '::' ? 'localhost' : address.address;
+
+  console.log(`🚀 Server running in http://${host}:${address.port}`);
 }
 bootstrap();
