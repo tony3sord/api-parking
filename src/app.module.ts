@@ -9,15 +9,9 @@ import { UserModule } from './modules/user/user.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     // Configuration for Postgres
-    TypeOrmModule.forRootAsync({
-      name: 'postgresConnection',
-      useFactory: () => databaseProviders.postgres,
-    }),
+    TypeOrmModule.forRoot(databaseProviders.postgres),
     // Configuration for MongoDB
-    TypeOrmModule.forRootAsync({
-      name: 'mongoConnection',
-      useFactory: () => databaseProviders.mongodb,
-    }),
+    TypeOrmModule.forRoot(databaseProviders.mongodb),
     ParkingModule,
     UserModule,
   ],
