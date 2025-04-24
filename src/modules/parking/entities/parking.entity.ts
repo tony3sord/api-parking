@@ -12,19 +12,13 @@ export class Parking {
   id: number;
 
   @Column()
-  name: string;
+  vehicleDetails: string;
 
   @Column()
-  address: string;
+  reservationDate: Date;
 
   @Column()
-  capacity: number;
-
-  @Column()
-  availableSpaces: number;
-
-  @Column()
-  pricePerHour: number;
+  reservationTime: string;
 
   @CreateDateColumn()
   createdAt: Date;
