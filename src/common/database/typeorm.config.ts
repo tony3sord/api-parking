@@ -9,6 +9,7 @@ export const databaseProviders: {
 } = {
   // Configuración para Postgres
   postgres: {
+    name: process.env.POSTGRES_DB_CONNECTION_NAME,
     type: 'postgres',
     host: process.env.POSTGRES_DB_HOST,
     port: parseInt(process.env.POSTGRES_DB_PORT as string) || 5432,
@@ -21,6 +22,7 @@ export const databaseProviders: {
 
   // Configuración para MongoDB
   mongodb: {
+    name: process.env.MONGO_DB_CONNECTION_NAME,
     type: 'mongodb',
     host: process.env.MONGO_DB_HOST,
     port: parseInt(process.env.MONGO_DB_PORT as string) || 27017,
