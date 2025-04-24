@@ -15,10 +15,10 @@ export class Parking {
   vehicleDetails: string;
 
   @Column()
-  reservationDate: number;
+  reservationDate: Date;
 
   @Column()
-  reservationTime: number;
+  reservationTime: Date;
 
   @CreateDateColumn()
   createdAt: Date;

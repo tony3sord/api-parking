@@ -1,12 +1,12 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsString } from 'class-validator';
 
 export class CreateParkingDto {
   @IsString()
   vehicleDetails: string;
 
-  @IsNumber()
-  reservationDate: number;
+  @IsDateString()
+  reservationDate: string;
 
-  @IsNumber()
-  reservationTime: number;
+  @IsDateString()
+  reservationTime: string;
 }
