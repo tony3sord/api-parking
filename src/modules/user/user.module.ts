@@ -11,5 +11,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   controllers: [UserController],
   providers: [UserService, UserRepository],
+  exports: [UserRepository],
 })
 export class UserModule {}
