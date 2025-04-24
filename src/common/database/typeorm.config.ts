@@ -1,5 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { User } from 'src/modules/user/entities/user.entity';
 dotenv.config();
 
 export const databaseProviders: {
@@ -14,7 +15,7 @@ export const databaseProviders: {
     username: process.env.POSTGRES_DB_USER,
     password: process.env.POSTGRES_DB_PASSWORD,
     database: process.env.POSTGRES_DB_NAME,
-    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    entities: [User],
     synchronize: process.env.NODE_ENV === 'production' ? false : true,
   },
 
