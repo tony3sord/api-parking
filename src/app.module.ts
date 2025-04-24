@@ -6,6 +6,7 @@ import { databaseProviders } from './common/database/typeorm.config';
 import { UserModule } from './modules/user/user.module';
 import { LoggerMiddleware } from './common/middleware/logs.middleware';
 import { LogModule } from './common/logs/logs.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { LogModule } from './common/logs/logs.module';
     ParkingModule,
     UserModule,
     LogModule,
+    AuthModule,
   ],
 })
 export class AppModule implements NestModule {
