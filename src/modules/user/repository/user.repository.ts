@@ -85,11 +85,11 @@ export class UserRepository {
       .getOne();
   }
 
-  async getUserByUserName(user: string) {
+  async getUserByUserName(username: string) {
     return await this.dataSource
       .getRepository(User)
       .createQueryBuilder('user')
-      .where({ user: user })
+      .where({ username: username })
       .getOne();
   }
 
