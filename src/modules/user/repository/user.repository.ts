@@ -68,4 +68,12 @@ export class UserRepository {
 
     return await userRepository.save(userToUpdate);
   }
+
+  async getUserByEmail(email: string) {
+    return await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .where({ email: email })
+      .getOne();
+  }
 }
