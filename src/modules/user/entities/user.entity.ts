@@ -4,6 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  Index,
 } from 'typeorm';
 
 @Entity('user')
@@ -17,12 +18,15 @@ export class User {
   @Column()
   lastname: string;
 
+  @Index()
   @Column()
   username: string;
 
+  @Index()
   @Column()
   email: string;
 
+  @Index()
   @Column()
   phone: string;
 
