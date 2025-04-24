@@ -11,12 +11,16 @@ export class CreateUserDto {
   readonly lastname: string;
 
   @ApiProperty({ description: 'The username of the user.' })
-  @IsString({ message: 'Hola' })
+  @IsString()
   readonly username: string;
 
   @ApiProperty({ description: 'The email of the user.' })
   @IsEmail()
   readonly email: string;
+
+  @ApiProperty({ description: 'The phone number of the user.' })
+  @IsString()
+  readonly phone: string;
 
   @ApiProperty({ description: 'The password of the user.' })
   @IsString()
