@@ -25,4 +25,14 @@ export class UserRepository {
       .createQueryBuilder('user')
       .getMany();
   }
+
+  async getForId(id: string) {
+    const user = await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .where({ id: id })
+      .getOne();
+    if (!user) throw new NotFoundException();
+    return user;
+  }
 }
