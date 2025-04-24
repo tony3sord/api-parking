@@ -1,30 +1,34 @@
-export class Parking {
-  id: number;
-  name: string;
-  address: string;
-  capacity: number;
-  availableSpaces: number;
-  pricePerHour: number;
-  createdAt: Date;
-  updatedAt: Date;
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-  constructor(
-    id: number,
-    name: string,
-    address: string,
-    capacity: number,
-    availableSpaces: number,
-    pricePerHour: number,
-    createdAt: Date,
-    updatedAt: Date,
-  ) {
-    this.id = id;
-    this.name = name;
-    this.address = address;
-    this.capacity = capacity;
-    this.availableSpaces = availableSpaces;
-    this.pricePerHour = pricePerHour;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
-  }
+@Entity()
+export class Parking {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column()
+  address: string;
+
+  @Column()
+  capacity: number;
+
+  @Column()
+  availableSpaces: number;
+
+  @Column()
+  pricePerHour: number;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
