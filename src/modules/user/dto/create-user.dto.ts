@@ -2,27 +2,27 @@ import { IsEmail, IsString, IsIn } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
-  @ApiProperty({ description: 'El nombre del usuario.' })
+  @ApiProperty({ description: 'The name of the user.' })
   @IsString()
   readonly name: string;
 
-  @ApiProperty({ description: 'El apellido del usuario.' })
+  @ApiProperty({ description: 'The lastname of the user.' })
   @IsString()
   readonly lastname: string;
 
-  @ApiProperty({ description: 'El nombre de usuario del usuario.' })
-  @IsString()
+  @ApiProperty({ description: 'The username of the user.' })
+  @IsString({ message: 'Hola' })
   readonly username: string;
 
-  @ApiProperty({ description: 'El correo del usuario.' })
+  @ApiProperty({ description: 'The email of the user.' })
   @IsEmail()
   readonly email: string;
 
-  @ApiProperty({ description: 'La contraseña del usuario.' })
+  @ApiProperty({ description: 'The password of the user.' })
   @IsString()
   readonly password: string;
 
-  @ApiProperty({ description: 'El rol del usuario.' })
+  @ApiProperty({ description: 'The role of the user.' })
   @IsIn(['Admin', 'Client', 'Worker'])
   readonly role: 'Admin' | 'Client' | 'Worker';
 }
