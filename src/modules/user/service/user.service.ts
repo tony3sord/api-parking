@@ -34,6 +34,18 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const userName = await this.userRepository.getUserByUserName(
+      updateUserDto.username,
+    );
+    const userEmail = await this.userRepository.getUserByEmail(
+      updateUserDto.email,
+    );
+    if (
+      (userEmail && userEmail.id !== id) ||
+      (userName && userName.id !== id)
+    ) {
+      throw new ConflictException('Email or Username already exists');
+    }
     return await this.userRepository.updateUser(id, updateUserDto);
   }
 
