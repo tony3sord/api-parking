@@ -3,10 +3,14 @@ import { User } from '../entities/user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { InjectEntityManager } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRepository {
-  constructor(private dataSource: EntityManager) {}
+  constructor(
+    @InjectEntityManager(process.env.POSTGRES_DB_CONNECTION_NAME)
+    private readonly dataSource: EntityManager,
+  ) {}
 
   async createUser(usuario: CreateUserDto): Promise<User> {
     const userRepository = this.dataSource.getRepository(User);
@@ -94,8 +98,6 @@ export class UserRepository {
   }
 
   async deleteUser(id: string) {
-    console.log(id);
-
     await this.dataSource
       .getRepository(User)
       .createQueryBuilder('user')
