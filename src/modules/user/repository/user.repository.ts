@@ -73,12 +73,8 @@ export class UserRepository {
     return await userRepository.save(userToUpdate);
   }
 
-  async getUserByEmail(email: string) {
-    return await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder('user')
-      .where({ email: email })
-      .getOne();
+  async getUserByEmail(email: string): Promise<User | null> {
+    return await this.dataSource.getRepository(User).findOneBy({ email });
   }
 
   async getAdmin() {
@@ -90,11 +86,11 @@ export class UserRepository {
   }
 
   async getUserByUserName(username: string) {
-    return await this.dataSource
-      .getRepository(User)
-      .createQueryBuilder('user')
-      .where({ username: username })
-      .getOne();
+    return await this.dataSource.getRepository(User).findOneBy({ username });
+  }
+
+  async getUserByPhone(phone: string) {
+    return await this.dataSource.getRepository(User).findOneBy({ phone });
   }
 
   async deleteUser(id: string) {
