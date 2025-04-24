@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateParkingDto } from './dto/create-parking.dto';
-import { UpdateParkingDto } from './dto/update-parking.dto';
+import { CreateParkingDto } from '../dto/create-parking.dto';
+import { UpdateParkingDto } from '../dto/update-parking.dto';
 
 @Injectable()
 export class ParkingService {
