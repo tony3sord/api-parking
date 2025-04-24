@@ -92,4 +92,12 @@ export class UserRepository {
       .where({ user: user })
       .getOne();
   }
+
+  async deleteUser(id: number) {
+    return await this.dataSource
+      .getRepository(User)
+      .createQueryBuilder('user')
+      .where({ id: id })
+      .delete();
+  }
 }
