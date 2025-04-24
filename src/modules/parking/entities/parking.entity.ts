@@ -4,7 +4,9 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import { User } from '../../user/entities/user.entity'; // Ajusta la ruta según tu estructura de proyecto
 
 @Entity()
 export class Parking {
@@ -19,6 +21,12 @@ export class Parking {
 
   @Column()
   reservationTime: Date;
+
+  @ManyToOne(() => User, (user) => user.parking, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  user: User;
 
   @CreateDateColumn()
   createdAt: Date;

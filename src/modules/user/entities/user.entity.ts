@@ -1,3 +1,4 @@
+import { Parking } from 'src/modules/parking/entities/parking.entity';
 import {
   Column,
   CreateDateColumn,
@@ -5,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   Index,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('user')
@@ -35,6 +37,9 @@ export class User {
 
   @Column()
   role: string;
+
+  @OneToMany(() => Parking, (parking) => parking.user)
+  parking: Parking;
 
   @CreateDateColumn()
   createdAt: Date;
