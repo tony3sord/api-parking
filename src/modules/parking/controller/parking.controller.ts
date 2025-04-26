@@ -6,16 +6,22 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ParkingService } from '../service/parking.service';
 import { CreateParkingDto } from '../dto/create-parking.dto';
 import { UpdateParkingDto } from '../dto/update-parking.dto';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorators';
+import { RolesEnum } from 'src/common/enums/roles.enum';
 
 @Controller('parking')
+@UseGuards(RolesGuard)
 export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
 
   @Post()
+  @Roles(RolesEnum.Admin)
   create(@Body() createParkingDto: CreateParkingDto) {
     return this.parkingService.create(createParkingDto);
   }
