@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
   ManyToOne,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
@@ -25,9 +26,9 @@ export class Parking {
   @Column({ type: 'timestamp' })
   reservationFinish: Date;
 
-  @ManyToOne(() => User, (user) => user.parking, {
-    eager: true,
+  @ManyToOne(() => User, (user) => user.id, {
     onDelete: 'CASCADE',
+    eager: false, // No cargar automáticamente la información del usuario
   })
   user: User;
 

@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   Index,
-  OneToMany,
+  OneToOne,
 } from 'typeorm';
 
 @Entity('user')
@@ -37,9 +37,6 @@ export class User {
 
   @Column()
   role: string;
-
-  @OneToMany(() => Parking, (parking) => parking.user)
-  parking: Parking;
 
   @CreateDateColumn()
   createdAt: Date;
