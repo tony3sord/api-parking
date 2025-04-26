@@ -29,7 +29,7 @@ export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
 
   @Post()
-  @Roles(RolesEnum.Admin)
+  @Roles(RolesEnum.Client)
   @ApiOperation({
     summary: 'Create a new parking entry',
     description: 'Allows an admin to create a new parking entry.',
