@@ -4,7 +4,7 @@ import { UpdateParkingDto } from '../dto/update-parking.dto';
 import { ParkingRepository } from '../repository/parking.repository';
 import { Parking } from '../entities/parking.entity';
 import { JwtService } from '@nestjs/jwt';
-import { UserRepository } from 'src/modules/user/repository/user.repository';
+import { UserRepository } from '../../user/repository/user.repository';
 
 @Injectable()
 export class ParkingService {

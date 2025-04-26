@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
-import { Parking } from 'src/modules/parking/entities/parking.entity';
-import { User } from 'src/modules/user/entities/user.entity';
+import { Parking } from '../../modules/parking/entities/parking.entity';
+import { User } from '../../modules/user/entities/user.entity';
 dotenv.config();
 
 export const databaseProviders: {

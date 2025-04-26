@@ -12,9 +12,9 @@ import {
 import { ParkingService } from '../service/parking.service';
 import { CreateParkingDto } from '../dto/create-parking.dto';
 import { UpdateParkingDto } from '../dto/update-parking.dto';
-import { RolesGuard } from 'src/common/guards/roles.guard';
-import { Roles } from 'src/common/decorators/roles.decorators';
-import { RolesEnum } from 'src/common/enums/roles.enum';
+import { RolesGuard } from '../../../common/guards/roles.guard';
+import { Roles } from '../../../common/decorators/roles.decorators';
+import { RolesEnum } from '../../../common/enums/roles.enum';
 import {
   ApiBody,
   ApiHeader,
