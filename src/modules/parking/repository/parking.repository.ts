@@ -15,7 +15,17 @@ export class ParkingRepository {
 
   async reqParkCar(createParkingDto: CreateParkingDto): Promise<Parking> {
     const parkRepository = this.dataSource.getRepository(Parking);
-    const newReqParking = parkRepository.create(createParkingDto);
+    const { reservationDate, reservationTime } = createParkingDto;
+
+    const reservationFinish = reservationDate + reservationTime;
+    const reservationFinishUTC = new Date(reservationFinish).toISOString();
+
+    const park = {
+      ...createParkingDto,
+      reservationFinish: reservationFinishUTC,
+    };
+
+    const newReqParking = parkRepository.create(park);
 
     return await parkRepository.save(newReqParking);
   }
