@@ -17,10 +17,13 @@ export class Parking {
   vehicleDetails: string;
 
   @Column()
-  reservationDate: Date;
+  reservationDate: string;
 
   @Column()
-  reservationTime: Date;
+  reservationTime: string;
+
+  @Column()
+  reservationFinish: Date;
 
   @ManyToOne(() => User, (user) => user.parking, {
     eager: true,

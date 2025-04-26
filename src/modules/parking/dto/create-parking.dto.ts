@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateParkingDto {
   @ApiProperty({
@@ -11,18 +11,16 @@ export class CreateParkingDto {
   vehicleDetails: string;
 
   @ApiProperty({
-    description: 'The date of the parking reservation in ISO 8601 format.',
-    example: '2025-04-26',
-    format: 'date',
+    description: 'The date of the parking reservation in milliseconds.',
+    example: 1745673000000,
   })
-  @IsDateString()
+  @IsNumber()
   reservationDate: string;
 
   @ApiProperty({
-    description: 'The time of the parking reservation in ISO 8601 format.',
-    example: '2025-04-26T14:00:00Z',
-    format: 'date-time',
+    description: 'The time of the parking reservation in milliseconds.',
+    example: 1745673000000,
   })
-  @IsDateString()
+  @IsNumber()
   reservationTime: string;
 }
