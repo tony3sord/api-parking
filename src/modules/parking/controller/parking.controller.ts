@@ -14,7 +14,15 @@ import { UpdateParkingDto } from '../dto/update-parking.dto';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorators';
 import { RolesEnum } from 'src/common/enums/roles.enum';
+import {
+  ApiBody,
+  ApiHeader,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Parking')
 @Controller('parking')
 @UseGuards(RolesGuard)
 export class ParkingController {
@@ -22,6 +30,22 @@ export class ParkingController {
 
   @Post()
   @Roles(RolesEnum.Admin)
+  @ApiOperation({
+    summary: 'Create a new parking entry',
+    description: 'Allows an admin to create a new parking entry.',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'The parking entry has been successfully created.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  @ApiBody({
+    description: 'The data required to create a parking entry',
+    type: CreateParkingDto,
+  })
   create(@Body() createParkingDto: CreateParkingDto) {
     return this.parkingService.create(createParkingDto);
   }
