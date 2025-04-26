@@ -54,4 +54,14 @@ export class AuthService {
     const phoneRegex = /^\+?[1-9]\d{1,14}$/;
     return phoneRegex.test(identifier);
   }
+
+  async verifyToken(token: string) {
+    try {
+      return this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+    } catch (e) {
+      throw new UnauthorizedException('Invalid token');
+    }
+  }
 }
