@@ -32,4 +32,26 @@ export class ParkingRepository {
     const newReqParking = parkRepository.create(park);
     return await parkRepository.save(newReqParking);
   }
+
+  async getStateParkingForReservationDate(
+    createParkingDto: CreateParkingDto,
+  ): Promise<boolean> {
+    const parkRepository = this.dataSource.getRepository(Parking);
+    const { reservationDate, reservationTime } = createParkingDto;
+    const reservationDateObj = new Date(reservationDate);
+
+    const reservationFinish = new Date(
+      reservationDateObj.getTime() + reservationTime * 1000,
+    );
+
+    const overlappingReservations = await parkRepository
+      .createQueryBuilder('parking')
+      .where(
+        'parking.reservationDate < :reservationFinish AND parking.reservationFinish > :reservationDate',
+        { reservationDate: reservationDateObj, reservationFinish },
+      )
+      .getCount();
+
+    return overlappingReservations > 0;
+  }
 }
