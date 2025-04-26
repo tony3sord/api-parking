@@ -6,7 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { User } from '../../user/entities/user.entity'; // Ajusta la ruta según tu estructura de proyecto
+import { User } from '../../user/entities/user.entity';
 
 @Entity()
 export class Parking {
@@ -16,13 +16,13 @@ export class Parking {
   @Column()
   vehicleDetails: string;
 
-  @Column()
-  reservationDate: string;
+  @Column({ type: 'timestamp' })
+  reservationDate: Date;
 
-  @Column()
-  reservationTime: string;
+  @Column({ type: 'int' })
+  reservationTime: number;
 
-  @Column()
+  @Column({ type: 'timestamp' })
   reservationFinish: Date;
 
   @ManyToOne(() => User, (user) => user.parking, {
