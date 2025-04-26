@@ -8,7 +8,13 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiParam,
+  ApiBody,
+} from '@nestjs/swagger';
 import { UserService } from '../service/user.service';
 import { CreateUserDto, UpdateUserDto } from '../dto';
 import { User } from '../entities/user.entity';
@@ -23,6 +29,10 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @ApiBody({
+    description: 'The data required to create a user',
+    type: CreateUserDto,
+  })
   @ApiOperation({
     summary: 'Create a new user',
     description: 'Creates a new user and returns the created user object.',
@@ -79,6 +89,10 @@ export class UserController {
 
   @Patch(':id')
   @Roles(RolesEnum.Admin)
+  @ApiBody({
+    description: 'The data required to create a user',
+    type: UpdateUserDto,
+  })
   @ApiOperation({
     summary: 'Update a user by ID',
     description: 'Updates the details of an existing user.',
