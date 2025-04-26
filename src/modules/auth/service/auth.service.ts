@@ -1,15 +1,21 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from 'src/modules/user/repository/user.repository';
 import { CreateAuthDto } from '../dto/create-auth.dto';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/modules/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private jwtService: JwtService,
+  ) {}
 
-  async validateUser(createAuthDto: CreateAuthDto): Promise<any> {
+  async validateUser(createAuthDto: CreateAuthDto): Promise<{ token: string }> {
     const { identifier, password } = createAuthDto;
 
-    let user;
+    let user: User | undefined;
     if (this.isEmail(identifier)) {
       user = await this.userRepository.getUserByEmail(identifier);
     } else if (this.isPhoneNumber(identifier)) {
@@ -18,11 +24,25 @@ export class AuthService {
       user = await this.userRepository.getUserByUserName(identifier);
     }
 
-    if (!user || user.password !== password) {
+    if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    return user;
+    return this.login(user);
+  }
+
+  private login(user: User): { token: string } {
+    const payload = {
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    };
+    const token: { token: string } = {
+      token: this.jwtService.sign(payload, {
+        secret: process.env.JWT_SECRET,
+      }),
+    };
+    return token;
   }
 
   private isEmail(identifier: string): boolean {
@@ -31,7 +51,7 @@ export class AuthService {
   }
 
   private isPhoneNumber(identifier: string): boolean {
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/; // Formato E.164
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
     return phoneRegex.test(identifier);
   }
 }
