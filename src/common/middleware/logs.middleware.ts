@@ -18,7 +18,14 @@ export class LoggerMiddleware implements NestMiddleware {
       const duration = Date.now() - start;
       const logMessage = `${method} ${originalUrl} ${statusCode} - ${duration}ms`;
       this.logger.log(logMessage);
-      await this.logService.saveLog(method, originalUrl, statusCode, duration);
+      if (process.env.NODE_ENV !== 'test') {
+        await this.logService.saveLog(
+          method,
+          originalUrl,
+          statusCode,
+          duration,
+        );
+      }
     });
 
     next();
