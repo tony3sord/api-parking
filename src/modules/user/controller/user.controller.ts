@@ -6,14 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { UserService } from '../service/user.service';
 import { CreateUserDto, UpdateUserDto } from '../dto';
 import { User } from '../entities/user.entity';
+import { Roles } from 'src/common/decorators/roles.decorators';
+import { RolesEnum } from 'src/common/enums/roles.enum';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @ApiTags('User')
 @Controller('user')
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -73,6 +78,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @Roles(RolesEnum.Admin)
   @ApiOperation({
     summary: 'Update a user by ID',
     description: 'Updates the details of an existing user.',
