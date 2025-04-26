@@ -1,7 +1,7 @@
 import { EntityManager } from 'typeorm';
 import { Parking } from '../entities/parking.entity';
-import { CreateParkingDto, UpdateParkingDto } from '../dto';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateParkingDto } from '../dto';
+import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -13,12 +13,16 @@ export class ParkingRepository {
     private readonly dataSource: EntityManager,
   ) {}
 
-  async reqParkCar(createParkingDto: CreateParkingDto): Promise<Parking> {
+  async reqParkCar(createParkingDto: CreateParkingDto) {
     const parkRepository = this.dataSource.getRepository(Parking);
-    const { reservationDate, reservationTime } = createParkingDto;
 
-    const reservationFinish = reservationDate + reservationTime;
-    const reservationFinishUTC = new Date(reservationFinish).toISOString();
+    const reservationDateObj = new Date(createParkingDto.reservationDate);
+
+    const reservationFinishObj = new Date(
+      reservationDateObj.getTime() + createParkingDto.reservationTime * 1000,
+    );
+
+    const reservationFinishUTC = reservationFinishObj.toISOString();
 
     const park = {
       ...createParkingDto,
@@ -26,7 +30,6 @@ export class ParkingRepository {
     };
 
     const newReqParking = parkRepository.create(park);
-
     return await parkRepository.save(newReqParking);
   }
 }
