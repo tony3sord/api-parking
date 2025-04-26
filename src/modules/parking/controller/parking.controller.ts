@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Headers,
 } from '@nestjs/common';
 import { ParkingService } from '../service/parking.service';
 import { CreateParkingDto } from '../dto/create-parking.dto';
@@ -21,6 +22,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { Parking } from '../entities/parking.entity';
 
 @ApiTags('Parking')
 @Controller('parking')
@@ -42,12 +44,20 @@ export class ParkingController {
     status: 401,
     description: 'Unauthorized. Token is missing or invalid.',
   })
+  @ApiResponse({
+    status: 409,
+    description:
+      'Conflict. There is already a car parked at the specified time.',
+  })
   @ApiBody({
     description: 'The data required to create a parking entry',
     type: CreateParkingDto,
   })
-  create(@Body() createParkingDto: CreateParkingDto) {
-    return this.parkingService.create(createParkingDto);
+  create(
+    @Body() createParkingDto: CreateParkingDto,
+    @Headers('authorization') token: string,
+  ) {
+    return this.parkingService.create(createParkingDto, token.split(' ')[1]);
   }
 
   @Get()
@@ -71,6 +81,26 @@ export class ParkingController {
   })
   async getState() {
     return this.parkingService.getState();
+  }
+
+  @Get('logs')
+  @Roles(RolesEnum.Admin)
+  @ApiOperation({
+    summary: 'Get parking logs',
+    description:
+      'Returns a list of all parking logs, including details of reservations.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The list of logs of the parking.',
+    type: [Parking],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  async getLogs(): Promise<Parking[]> {
+    return this.parkingService.getLogs();
   }
 
   @Get(':id')
