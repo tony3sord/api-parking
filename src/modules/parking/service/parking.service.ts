@@ -21,8 +21,8 @@ export class ParkingService {
     return await this.parkingRepository.reqParkCar(createParkingDto);
   }
 
-  findAll() {
-    return `This action returns all parking`;
+  async getState(): Promise<boolean> {
+    return await this.parkingRepository.getStateNow();
   }
 
   findOne(id: number) {
