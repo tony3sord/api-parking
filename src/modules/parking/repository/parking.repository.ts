@@ -54,4 +54,20 @@ export class ParkingRepository {
 
     return overlappingReservations > 0;
   }
+
+  async getStateNow(): Promise<boolean> {
+    const parkRepository = this.dataSource.getRepository(Parking);
+
+    const now = new Date();
+
+    const state = await parkRepository
+      .createQueryBuilder('parking')
+      .where(
+        'parking.reservationDate <= :now AND parking.reservationFinish >= :now',
+        { now },
+      )
+      .getCount();
+
+    return state > 0;
+  }
 }
