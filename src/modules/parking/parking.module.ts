@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Parking } from './entities/parking.entity';
 import * as dotenv from 'dotenv';
 import { JwtModule } from '@nestjs/jwt';
+import { UserModule } from '../user/user.module';
 dotenv.config();
 
 @Module({
@@ -18,6 +19,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: process.env.JWT_EXPIRATION },
     }),
+    UserModule,
   ],
   controllers: [ParkingController],
   providers: [ParkingService, ParkingRepository],
