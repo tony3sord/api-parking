@@ -37,6 +37,10 @@ export class ParkingService {
     return await this.parkingRepository.getStateNow();
   }
 
+  async getLogs(): Promise<Parking[]> {
+    return await this.parkingRepository.getLogsForAdmin();
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} parking`;
   }
