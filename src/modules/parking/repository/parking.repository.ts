@@ -4,6 +4,7 @@ import { CreateParkingDto } from '../dto';
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { User } from 'src/modules/user/entities/user.entity';
 dotenv.config();
 
 @Injectable()
@@ -13,7 +14,7 @@ export class ParkingRepository {
     private readonly dataSource: EntityManager,
   ) {}
 
-  async reqParkCar(createParkingDto: CreateParkingDto) {
+  async reqParkCar(createParkingDto: CreateParkingDto, user: User) {
     const parkRepository = this.dataSource.getRepository(Parking);
 
     const reservationDateObj = new Date(createParkingDto.reservationDate);
@@ -27,6 +28,7 @@ export class ParkingRepository {
     const park = {
       ...createParkingDto,
       reservationFinish: reservationFinishUTC,
+      user: user,
     };
 
     const newReqParking = parkRepository.create(park);
@@ -69,5 +71,13 @@ export class ParkingRepository {
       .getCount();
 
     return state > 0;
+  }
+
+  async getLogsForAdmin(): Promise<Parking[]> {
+    const parkRepository = this.dataSource.getRepository(Parking);
+
+    const logs = await parkRepository.createQueryBuilder('parking').getMany();
+
+    return logs;
   }
 }
