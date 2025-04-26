@@ -16,10 +16,9 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.setGlobalPrefix('api');
   const document = SwaggerModule.createDocument(app, configSwagger);
   SwaggerModule.setup('/', app, document);
-
-  app.setGlobalPrefix('api');
 
   const port = process.env.PORT ?? 3000;
   const server = await app.listen(port);
