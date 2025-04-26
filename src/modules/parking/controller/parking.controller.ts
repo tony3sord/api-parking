@@ -51,8 +51,26 @@ export class ParkingController {
   }
 
   @Get()
-  findAll() {
-    return this.parkingService.findAll();
+  @Roles(RolesEnum.Worker)
+  @ApiOperation({
+    summary: 'Check parking availability',
+    description:
+      'Returns true if the parking is currently occupied, and false if it is available.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The current state of the parking (occupied or available).',
+    schema: {
+      type: 'boolean',
+      example: true,
+    },
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  async getState() {
+    return this.parkingService.getState();
   }
 
   @Get(':id')
