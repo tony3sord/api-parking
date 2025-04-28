@@ -58,7 +58,7 @@ export class AuthService {
 
   async verifyToken(token: string) {
     try {
-      return this.jwtService.verifyAsync(token, {
+      return await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
     } catch (e) {
