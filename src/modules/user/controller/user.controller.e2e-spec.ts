@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../../app.module';
+import { createUserDtoTest } from '../../../../test/user/create.user.objects';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -28,34 +29,26 @@ describe('UserController (e2e)', () => {
     await app.close();
   });
 
-  const createUserDto = {
-    name: 'Tony',
-    lastname: 'Aliaga',
-    username: 'tony3sord',
-    email: 'tony@gmail.com',
-    phone: '+53 55964629',
-    password: 'password123',
-    role: 'Client',
-  };
+  it('/api/user (POST) - should create users one by one', async () => {
+    for (const user of createUserDtoTest) {
+      const response = await request(app.getHttpServer())
+        .post('/api/user')
+        .send(user)
+        .expect([201, 409]); //201 created, 409 conflict if user already exists
 
-  it('/api/user (POST) - should create a new user', async () => {
-    const response = await request(app.getHttpServer())
-      .post('/api/user')
-      .send(createUserDto);
-    expect([201, 409]).toContain(response.status);
-
-    if (response.status === 201) {
-      expect(response.body).toEqual(
-        expect.objectContaining({
-          id: expect.any(Number),
-          name: 'Tony',
-          lastname: 'Aliaga',
-          username: 'tony3sord',
-          email: 'tony@gmail.com',
-          phone: '+53 55964629',
-          role: 'Client',
-        }),
-      );
+      if (response.status === 201) {
+        expect(response.body).toEqual(
+          expect.objectContaining({
+            id: expect.any(Number),
+            name: user.name,
+            lastname: user.lastname,
+            username: user.username,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+          }),
+        );
+      }
     }
   });
 });
