@@ -11,21 +11,11 @@ class CustomSequencer extends Sequencer {
       'user.delete.e2e-spec.ts',
     ];
 
-    console.log(
-      'Tests before sorting:',
-      tests.map((test) => test.path),
-    ); // Imprime las pruebas antes de ordenar
-
     const sortedTests = tests.sort((a, b) => {
       const aName = a.path.split('/').pop();
       const bName = b.path.split('/').pop();
       return order.indexOf(aName) - order.indexOf(bName);
     });
-
-    console.log(
-      'Tests after sorting:',
-      sortedTests.map((test) => test.path),
-    ); // Imprime las pruebas después de ordenar
 
     return sortedTests;
   }
