@@ -4,8 +4,6 @@ import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
 import { createUserDtoTest } from '../user/create.user.objects';
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 describe('UserController (e2e)', () => {
   let app: INestApplication;
 
@@ -31,7 +29,6 @@ describe('UserController (e2e)', () => {
     await app.close();
   });
 
-  // Pruebas de creación de usuario
   it('/api/user (POST) - should create users one by one', async () => {
     for (const user of createUserDtoTest) {
       const response = await request(app.getHttpServer())
