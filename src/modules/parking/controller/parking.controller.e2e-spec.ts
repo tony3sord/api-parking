@@ -50,14 +50,24 @@ describe('UserController (e2e)', () => {
       );
     }
   });
-  it('/api/parking (GET)', async () => {
+  it('/api/parking/logs (GET)', async () => {
     const response = await request(app.getHttpServer())
-      .get('/api/parking')
-      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Worker]}`)
+      .get('/api/parking/logs')
+      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
       .expect(200);
 
-    const booleanValue = response.text === 'false' ? false : true;
-    expect(typeof booleanValue).toBe('boolean');
-    expect(booleanValue).toBe([false, true].includes(booleanValue));
+    response.body.forEach((parkingLog) => {
+      expect(parkingLog).toEqual(
+        expect.objectContaining({
+          id: expect.any(Number),
+          vehicleDetails: expect.any(String),
+          reservationDate: expect.any(String),
+          reservationTime: expect.any(Number),
+          reservationFinish: expect.any(String),
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        }),
+      );
+    });
   });
 });
