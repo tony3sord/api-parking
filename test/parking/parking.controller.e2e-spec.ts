@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../app.module';
-import { createParkingDTOTest } from '../../../../test/parking/create.parking.objects';
-import { tokensByRole } from '../../auth/controller/auth.controller.e2e-spec';
-import { RolesEnum } from '../../../common/enums/roles.enum';
+import { AppModule } from '../../src/app.module';
+import { createParkingDTOTest } from '../parking/create.parking.objects';
+import { tokensByRole } from '../auth/auth.controller.e2e-spec';
+import { RolesEnum } from '../../src/common/enums/roles.enum';
 
-describe('UserController (e2e)', () => {
+describe('ParkingController (e2e)', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -31,15 +31,19 @@ describe('UserController (e2e)', () => {
     await app.close();
   });
 
-  it('/api/parking (POST)', async () => {
+  // Función para esperar un número de milisegundos
+  const wait = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  it('/api/parking (POST) - should create a parking spot', async () => {
+    // Espera 3 segundos (3000 milisegundos)
+    // await wait(3000);
+
     const response = await request(app.getHttpServer())
       .post('/api/parking')
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Client]}`)
       .send(createParkingDTOTest)
-      // 201: Created
-      // 409: Conflict (the parking request cannot be completed because there is already a car in the parking spot)
-      // 401 if not authorized
-      .expect([201, 409]);
+      .expect([201, 409]); // 201: Created, 409: Conflict if parking spot already taken
 
     if (response.status === 201) {
       expect(response.body).toEqual(
@@ -50,11 +54,15 @@ describe('UserController (e2e)', () => {
       );
     }
   });
-  it('/api/parking/logs (GET)', async () => {
+
+  it('/api/parking/logs (GET) - should retrieve parking logs', async () => {
+    // Espera 3 segundos (3000 milisegundos)
+    await wait(3000);
+
     const response = await request(app.getHttpServer())
       .get('/api/parking/logs')
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
-      .expect(200);
+      .expect(200); // 200: OK
 
     response.body.forEach((parkingLog) => {
       expect(parkingLog).toEqual(
