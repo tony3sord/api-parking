@@ -5,5 +5,6 @@
   "testMatch": ["**/?(*.)+(e2e-spec).[tj]s"],
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
-  }
+  },
+  "testSequencer": "./test/test.sequencer.ts"
 }
