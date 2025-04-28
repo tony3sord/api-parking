@@ -6,8 +6,6 @@ import { loginDtoTest } from './login.objects';
 
 export const tokensByRole: Record<string, string> = {};
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
 
@@ -34,7 +32,6 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/api/auth/login (POST) - should log in and obtain token', async () => {
-    await wait(3000);
     for (const user of loginDtoTest) {
       const response = await request(app.getHttpServer())
         .post('/api/auth/login')

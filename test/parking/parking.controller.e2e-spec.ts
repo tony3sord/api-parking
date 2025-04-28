@@ -31,14 +31,7 @@ describe('ParkingController (e2e)', () => {
     await app.close();
   });
 
-  // Función para esperar un número de milisegundos
-  const wait = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
   it('/api/parking (POST) - should create a parking spot', async () => {
-    // Espera 3 segundos (3000 milisegundos)
-    // await wait(3000);
-
     const response = await request(app.getHttpServer())
       .post('/api/parking')
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Client]}`)
@@ -56,9 +49,6 @@ describe('ParkingController (e2e)', () => {
   });
 
   it('/api/parking/logs (GET) - should retrieve parking logs', async () => {
-    // Espera 3 segundos (3000 milisegundos)
-    await wait(3000);
-
     const response = await request(app.getHttpServer())
       .get('/api/parking/logs')
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
