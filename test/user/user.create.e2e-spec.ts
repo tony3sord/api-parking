@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
-import { AppModule } from '../../../app.module';
-import { createUserDtoTest } from '../../../../test/user/create.user.objects';
+import { AppModule } from '../../src/app.module';
+import { createUserDtoTest } from '../user/create.user.objects';
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
@@ -29,12 +31,13 @@ describe('UserController (e2e)', () => {
     await app.close();
   });
 
+  // Pruebas de creación de usuario
   it('/api/user (POST) - should create users one by one', async () => {
     for (const user of createUserDtoTest) {
       const response = await request(app.getHttpServer())
         .post('/api/user')
         .send(user)
-        .expect([201, 409]); //201 created, 409 conflict if user already exists
+        .expect([201, 409]); // 201 created, 409 conflict if user already exists
 
       if (response.status === 201) {
         expect(response.body).toEqual(
