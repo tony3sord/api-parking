@@ -7,7 +7,7 @@ export const createUserDtoTest = [
     username: 'tony3sord',
     email: 'tony@gmail.com',
     phone: '+53 55964629',
-    password: 'password123',
+    password: 'securepassword123',
     role: RolesEnum.Client,
   },
   {
@@ -16,7 +16,7 @@ export const createUserDtoTest = [
     username: 'alice123',
     email: 'alice@gmail.com',
     phone: '+53 55964630',
-    password: 'password123',
+    password: 'securepassword123',
     role: RolesEnum.Admin,
   },
   {
@@ -25,7 +25,7 @@ export const createUserDtoTest = [
     username: 'dianap',
     email: 'diana@gmail.com',
     phone: '+53 55964633',
-    password: 'password123',
+    password: 'securepassword123',
     role: RolesEnum.Worker,
   },
 ];
