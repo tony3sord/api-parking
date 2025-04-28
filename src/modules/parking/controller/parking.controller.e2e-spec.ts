@@ -50,4 +50,14 @@ describe('UserController (e2e)', () => {
       );
     }
   });
+  it('/api/parking (GET)', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/api/parking')
+      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Worker]}`)
+      .expect(200);
+
+    const booleanValue = response.text === 'false' ? false : true;
+    expect(typeof booleanValue).toBe('boolean');
+    expect(booleanValue).toBe([false, true].includes(booleanValue));
+  });
 });
