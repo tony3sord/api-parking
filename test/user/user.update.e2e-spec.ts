@@ -2,11 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../src/app.module';
-import { createUserDtoTest } from '../user/create.user.objects';
 import { RolesEnum } from '../../src/common/enums/roles.enum';
 import { tokensByRole } from '../auth/auth.controller.e2e-spec';
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;
