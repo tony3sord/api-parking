@@ -2,6 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { ParkingSpot } from '../../modules/parkingSpot/entities/parkingSpot.entity';
 import { User } from '../../modules/user/entities/user.entity';
+import { Parking } from '../../modules/parking/entities/parking.entity';
 dotenv.config();
 
 export const databaseProviders: {
@@ -17,7 +18,7 @@ export const databaseProviders: {
     username: process.env.POSTGRES_DB_USER,
     password: process.env.POSTGRES_DB_PASSWORD,
     database: process.env.POSTGRES_DB_NAME,
-    entities: [User, ParkingSpot],
+    entities: [User, ParkingSpot, Parking],
     synchronize: process.env.NODE_ENV === 'production' ? false : true,
   },
 
