@@ -23,8 +23,8 @@ import {
 } from '@nestjs/swagger';
 import { ParkingSpot } from '../entities/parkingSpot.entity';
 
-@ApiTags('Parking')
-@Controller('parking')
+@ApiTags('ParkingSpot')
+@Controller('parkingSpot')
 @UseGuards(RolesGuard)
 export class ParkingController {
   constructor(private readonly parkingService: ParkingSpotService) {}
