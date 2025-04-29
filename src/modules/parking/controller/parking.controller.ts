@@ -98,6 +98,33 @@ export class ParkingController {
   }
 
   @Patch(':id')
+  @Roles(RolesEnum.Admin)
+  @ApiOperation({
+    summary: 'Update a specific parking',
+    description: 'Updates the details of a specific parking by its ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'The unique identifier of the parking to update.',
+    type: String,
+  })
+  @ApiBody({
+    description: 'The data required to update the parking',
+    type: UpdateParkingDto,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The parking has been successfully updated.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found. No parking found with the specified ID.',
+  })
   async update(
     @Param('id') id: string,
     @Body() updateParkingDto: UpdateParkingDto,
