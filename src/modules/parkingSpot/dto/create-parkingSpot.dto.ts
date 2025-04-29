@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsInt, IsString } from 'class-validator';
+import {
+  IsDateString,
+  IsInt,
+  IsNumber,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class CreateParkingSpotDto {
   @ApiProperty({
@@ -24,4 +30,13 @@ export class CreateParkingSpotDto {
   })
   @IsInt()
   reservationTime: number;
+
+  @ApiProperty({
+    description: 'The ID of the parking to which this parking spot belongs.',
+    example: 1,
+  })
+  @IsNumber()
+  @IsInt()
+  @IsPositive()
+  parking: number;
 }
