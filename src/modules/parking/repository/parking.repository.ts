@@ -3,6 +3,7 @@ import { Parking } from '../entities/parking.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
+import { CreateParkingDto } from '../dto';
 dotenv.config();
 
 @Injectable()
@@ -22,5 +23,18 @@ export class ParkingRepository {
       .createQueryBuilder('parking')
       .where('parking.name = :name', { name })
       .getOne();
+  }
+
+  async createParking(createParkingDto: CreateParkingDto): Promise<Parking> {
+    const result = await this.dataSource
+      .getRepository(Parking)
+      .createQueryBuilder()
+      .insert()
+      .into(Parking)
+      .values(createParkingDto)
+      .returning('*')
+      .execute();
+
+    return result.raw[0];
   }
 }
