@@ -7,6 +7,7 @@ import { ParkingSpot } from './entities/parkingSpot.entity';
 import * as dotenv from 'dotenv';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
+import { ParkingModule } from '../parking/parking.module';
 dotenv.config();
 
 @Module({
@@ -20,6 +21,7 @@ dotenv.config();
       signOptions: { expiresIn: process.env.JWT_EXPIRATION },
     }),
     UserModule,
+    ParkingModule,
   ],
   controllers: [ParkingController],
   providers: [ParkingSpotService, ParkingSpotRepository],

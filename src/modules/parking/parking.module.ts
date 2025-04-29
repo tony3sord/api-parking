@@ -6,5 +6,6 @@ import { ParkingRepository } from './repository/parking.repository';
 @Module({
   controllers: [ParkingController],
   providers: [ParkingService, ParkingRepository],
+  exports: [ParkingService],
 })
 export class ParkingModule {}
