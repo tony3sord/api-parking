@@ -48,6 +48,11 @@ export class ParkingService {
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} parking`;
+    try {
+      return await this.parkingRepository.deleteParking(id);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 }
