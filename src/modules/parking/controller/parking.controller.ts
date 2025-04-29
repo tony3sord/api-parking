@@ -46,6 +46,19 @@ export class ParkingController {
   }
 
   @Get()
+  @Roles(RolesEnum.Client, RolesEnum.Admin)
+  @ApiOperation({
+    summary: 'Retrieve all parkings',
+    description: 'Fetches a list of all parkings available in the system.',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'A list of parkings has been successfully retrieved.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
   async findAll() {
     return await this.parkingService.findAll();
   }
