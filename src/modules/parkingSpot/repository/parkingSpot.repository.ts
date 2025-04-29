@@ -1,6 +1,6 @@
 import { EntityManager } from 'typeorm';
-import { Parking } from '../entities/parking.entity';
-import { CreateParkingDto } from '../dto';
+import { ParkingSpot } from '../entities/parkingSpot.entity';
+import { CreateParkingSpotDto } from '../dto';
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
@@ -8,25 +8,26 @@ import { User } from 'src/modules/user/entities/user.entity';
 dotenv.config();
 
 @Injectable()
-export class ParkingRepository {
+export class ParkingSpotRepository {
   constructor(
     @InjectEntityManager(process.env.POSTGRES_DB_CONNECTION_NAME)
     private readonly dataSource: EntityManager,
   ) {}
 
-  async reqParkCar(createParkingDto: CreateParkingDto, user: User) {
-    const parkRepository = this.dataSource.getRepository(Parking);
+  async reqParkCar(createParkingSpotDto: CreateParkingSpotDto, user: User) {
+    const parkRepository = this.dataSource.getRepository(ParkingSpot);
 
-    const reservationDateObj = new Date(createParkingDto.reservationDate);
+    const reservationDateObj = new Date(createParkingSpotDto.reservationDate);
 
     const reservationFinishObj = new Date(
-      reservationDateObj.getTime() + createParkingDto.reservationTime * 1000,
+      reservationDateObj.getTime() +
+        createParkingSpotDto.reservationTime * 1000,
     );
 
     const reservationFinishUTC = reservationFinishObj.toISOString();
 
     const park = {
-      ...createParkingDto,
+      ...createParkingSpotDto,
       reservationFinish: reservationFinishUTC,
       user: user,
     };
@@ -36,10 +37,10 @@ export class ParkingRepository {
   }
 
   async getStateParkingForReservationDate(
-    createParkingDto: CreateParkingDto,
+    createParkingSpotDto: CreateParkingSpotDto,
   ): Promise<boolean> {
-    const parkRepository = this.dataSource.getRepository(Parking);
-    const { reservationDate, reservationTime } = createParkingDto;
+    const parkRepository = this.dataSource.getRepository(ParkingSpot);
+    const { reservationDate, reservationTime } = createParkingSpotDto;
     const reservationDateObj = new Date(reservationDate);
 
     const reservationFinish = new Date(
@@ -58,7 +59,7 @@ export class ParkingRepository {
   }
 
   async getStateNow(): Promise<boolean> {
-    const parkRepository = this.dataSource.getRepository(Parking);
+    const parkRepository = this.dataSource.getRepository(ParkingSpot);
 
     const now = new Date();
 
@@ -73,8 +74,8 @@ export class ParkingRepository {
     return state > 0;
   }
 
-  async getLogsForAdmin(): Promise<Parking[]> {
-    const parkRepository = this.dataSource.getRepository(Parking);
+  async getLogsForAdmin(): Promise<ParkingSpot[]> {
+    const parkRepository = this.dataSource.getRepository(ParkingSpot);
 
     const logs = await parkRepository.createQueryBuilder('parking').getMany();
 

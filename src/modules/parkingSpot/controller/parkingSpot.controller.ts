@@ -9,9 +9,8 @@ import {
   UseGuards,
   Headers,
 } from '@nestjs/common';
-import { ParkingService } from '../service/parking.service';
-import { CreateParkingDto } from '../dto/create-parking.dto';
-import { UpdateParkingDto } from '../dto/update-parking.dto';
+import { ParkingSpotService } from '../service/parkingSpot.service';
+import { CreateParkingSpotDto, UpdateParkingSpotDto } from '../dto/index';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorators';
 import { RolesEnum } from '../../../common/enums/roles.enum';
@@ -22,19 +21,19 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Parking } from '../entities/parking.entity';
+import { ParkingSpot } from '../entities/parkingSpot.entity';
 
 @ApiTags('Parking')
 @Controller('parking')
 @UseGuards(RolesGuard)
 export class ParkingController {
-  constructor(private readonly parkingService: ParkingService) {}
+  constructor(private readonly parkingService: ParkingSpotService) {}
 
   @Post()
   @Roles(RolesEnum.Client)
   @ApiOperation({
     summary: 'Create a new parking entry',
-    description: 'Allows an admin to create a new parking entry.',
+    description: 'Allows an client to create a new parking entry.',
   })
   @ApiResponse({
     status: 201,
@@ -51,13 +50,16 @@ export class ParkingController {
   })
   @ApiBody({
     description: 'The data required to create a parking entry',
-    type: CreateParkingDto,
+    type: CreateParkingSpotDto,
   })
-  create(
-    @Body() createParkingDto: CreateParkingDto,
+  async create(
+    @Body() createParkingDto: CreateParkingSpotDto,
     @Headers('authorization') token: string,
   ) {
-    return this.parkingService.create(createParkingDto, token.split(' ')[1]);
+    return await this.parkingService.create(
+      createParkingDto,
+      token.split(' ')[1],
+    );
   }
 
   @Get()
@@ -93,13 +95,13 @@ export class ParkingController {
   @ApiResponse({
     status: 200,
     description: 'The list of logs of the parking.',
-    type: [Parking],
+    type: [ParkingSpot],
   })
   @ApiResponse({
     status: 401,
     description: 'Unauthorized. Token is missing or invalid.',
   })
-  async getLogs(): Promise<Parking[]> {
+  async getLogs(): Promise<ParkingSpot[]> {
     return this.parkingService.getLogs();
   }
 
@@ -109,7 +111,10 @@ export class ParkingController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateParkingDto: UpdateParkingDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateParkingDto: UpdateParkingSpotDto,
+  ) {
     return this.parkingService.update(+id, updateParkingDto);
   }
 

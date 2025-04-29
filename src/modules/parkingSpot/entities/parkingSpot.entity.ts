@@ -10,7 +10,7 @@ import {
 import { User } from '../../user/entities/user.entity';
 
 @Entity()
-export class Parking {
+export class ParkingSpot {
   @PrimaryGeneratedColumn()
   id: number;
 
