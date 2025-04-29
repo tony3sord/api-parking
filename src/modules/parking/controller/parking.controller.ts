@@ -133,6 +133,29 @@ export class ParkingController {
   }
 
   @Delete(':id')
+  @Roles(RolesEnum.Admin)
+  @ApiOperation({
+    summary: 'Delete a specific parking',
+    description: 'Deletes a specific parking by its ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'The unique identifier of the parking to delete.',
+    type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The parking has been successfully deleted.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found. No parking found with the specified ID.',
+  })
   async remove(@Param('id') id: string) {
     return await this.parkingService.remove(+id);
   }
