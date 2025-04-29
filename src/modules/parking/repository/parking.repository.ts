@@ -61,4 +61,14 @@ export class ParkingRepository {
 
     return await parkRepository.save(parking);
   }
+
+  async deleteParking(id: number): Promise<string> {
+    const parkRepository = this.dataSource.getRepository(Parking);
+    const parking = await parkRepository.findOneBy({ id });
+    if (!parking) {
+      throw new NotFoundException(`Parking with ID ${id} not found`);
+    }
+    await parkRepository.delete(id);
+    return `Parking deleted successfully`;
+  }
 }
