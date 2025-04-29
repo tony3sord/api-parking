@@ -1,1 +1,30 @@
-export class Parking {}
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { ParkingSpot } from 'src/modules/parkingSpot/entities/parkingSpot.entity';
+
+@Entity()
+export class Parking {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @OneToMany(() => ParkingSpot, (parkingSpot) => parkingSpot.id, {
+    onDelete: 'CASCADE',
+    eager: false,
+  })
+  parkingSpot: ParkingSpot;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+}
