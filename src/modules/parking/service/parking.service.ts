@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateParkingDto, UpdateParkingDto } from '../dto/index';
+import { ParkingRepository } from '../repository/parking.repository';
 
 @Injectable()
 export class ParkingService {
+  constructor(private readonly parkingRepository: ParkingRepository) {}
   async create(createParkingDto: CreateParkingDto) {
     return 'This action adds a new parking';
   }
