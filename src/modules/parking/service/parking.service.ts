@@ -39,7 +39,12 @@ export class ParkingService {
   }
 
   async update(id: number, updateParkingDto: UpdateParkingDto) {
-    return `This action updates a #${id} parking`;
+    try {
+      return await this.parkingRepository.updateParking(id, updateParkingDto);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   async remove(id: number) {
