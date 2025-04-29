@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ParkingService } from './service/parking.service';
-import { ParkingController } from './controller/parking.controller';
-import { ParkingRepository } from './repository/parking.repository';
+import { ParkingSpotService } from './service/parkingSpot.service';
+import { ParkingController } from './controller/parkingSpot.controller';
+import { ParkingSpotRepository } from './repository/parkingSpot.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Parking } from './entities/parking.entity';
+import { ParkingSpot } from './entities/parkingSpot.entity';
 import * as dotenv from 'dotenv';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from '../user/user.module';
@@ -12,7 +12,7 @@ dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forFeature(
-      [Parking],
+      [ParkingSpot],
       process.env.POSTGRES_DB_CONNECTION_NAME,
     ),
     JwtModule.register({
@@ -22,6 +22,6 @@ dotenv.config();
     UserModule,
   ],
   controllers: [ParkingController],
-  providers: [ParkingService, ParkingRepository],
+  providers: [ParkingSpotService, ParkingSpotRepository],
 })
-export class ParkingModule {}
+export class ParkingSpotModule {}

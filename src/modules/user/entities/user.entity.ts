@@ -1,4 +1,4 @@
-import { Parking } from 'src/modules/parking/entities/parking.entity';
+import { ParkingSpot } from 'src/modules/parkingSpot/entities/parkingSpot.entity';
 import {
   Column,
   CreateDateColumn,

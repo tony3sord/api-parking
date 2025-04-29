@@ -1,26 +1,25 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateParkingDto } from '../dto/create-parking.dto';
-import { UpdateParkingDto } from '../dto/update-parking.dto';
-import { ParkingRepository } from '../repository/parking.repository';
-import { Parking } from '../entities/parking.entity';
+import { CreateParkingSpotDto, UpdateParkingSpotDto } from '../dto/index';
+import { ParkingSpotRepository } from '../repository/parkingSpot.repository';
+import { ParkingSpot } from '../entities/parkingSpot.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../../user/repository/user.repository';
 
 @Injectable()
-export class ParkingService {
+export class ParkingSpotService {
   constructor(
-    private readonly parkingRepository: ParkingRepository,
+    private readonly parkingRepository: ParkingSpotRepository,
     private readonly jwtService: JwtService,
     private readonly userRepository: UserRepository,
   ) {}
 
   async create(
-    createParkingDto: CreateParkingDto,
+    createParkingSpotDto: CreateParkingSpotDto,
     token: string,
-  ): Promise<Parking> {
+  ): Promise<ParkingSpot> {
     if (
       await this.parkingRepository.getStateParkingForReservationDate(
-        createParkingDto,
+        createParkingSpotDto,
       )
     ) {
       throw new ConflictException(
@@ -30,14 +29,18 @@ export class ParkingService {
     const decodedToken = this.jwtService.decode(token);
     const user = await this.userRepository.getForId(decodedToken.idUser);
 
-    return await this.parkingRepository.reqParkCar(createParkingDto, user);
+    return await this.parkingRepository.reqParkCar(createParkingSpotDto, user);
   }
 
   async getState(): Promise<boolean> {
     return await this.parkingRepository.getStateNow();
   }
 
-  async getLogs(): Promise<Parking[]> {
+  async createParkingSpace(): Promise<boolean> {
+    return await this.parkingRepository.getStateNow();
+  }
+
+  async getLogs(): Promise<ParkingSpot[]> {
     return await this.parkingRepository.getLogsForAdmin();
   }
 
@@ -45,7 +48,7 @@ export class ParkingService {
     return `This action returns a #${id} parking`;
   }
 
-  update(id: number, updateParkingDto: UpdateParkingDto) {
+  update(id: number, updateParkingSpotDto: UpdateParkingSpotDto) {
     return `This action updates a #${id} parking`;
   }
 

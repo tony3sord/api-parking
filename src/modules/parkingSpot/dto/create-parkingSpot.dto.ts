@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsInt, IsString } from 'class-validator';
 
-export class CreateParkingDto {
+export class CreateParkingSpotDto {
   @ApiProperty({
     description:
       'Details of the vehicle, such as make, model, and license plate.',
@@ -20,7 +20,7 @@ export class CreateParkingDto {
 
   @ApiProperty({
     description: 'The duration of the parking reservation in seconds.',
-    example: 7200, 
+    example: 7200,
   })
   @IsInt()
   reservationTime: number;
