@@ -16,7 +16,7 @@ export class ParkingService {
   }
 
   async findAll() {
-    return `This action returns all parking`;
+    return await this.parkingRepository.getParkings();
   }
 
   async findOne(id: number) {
