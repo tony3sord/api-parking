@@ -7,7 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { LoggerMiddleware } from './common/middleware/logs.middleware';
 import { LogModule } from './common/logs/logs.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { ParkingModule } from './parking/parking.module';
+import { ParkingModule } from './modules/parking/parking.module';
 
 @Module({
   imports: [
