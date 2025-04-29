@@ -11,7 +11,7 @@ export class ParkingRepository {
     @InjectEntityManager(process.env.POSTGRES_DB_CONNECTION_NAME)
     private readonly dataSource: EntityManager,
   ) {}
-  async getParking(): Promise<Parking[]> {
+  async getParkings(): Promise<Parking[]> {
     const parkRepository = this.dataSource.getRepository(Parking);
     return await parkRepository.find();
   }
