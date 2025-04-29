@@ -44,7 +44,7 @@ export class ParkingSpotRepository {
 
   async getStateParkingForReservationDate(
     createParkingSpotDto: CreateParkingSpotDto,
-  ): Promise<boolean> {
+  ): Promise<number> {
     const parkRepository = this.dataSource.getRepository(ParkingSpot);
     const { reservationDate, reservationTime } = createParkingSpotDto;
     const reservationDateObj = new Date(reservationDate);
@@ -61,7 +61,7 @@ export class ParkingSpotRepository {
       )
       .getCount();
 
-    return overlappingReservations > 0;
+    return overlappingReservations;
   }
 
   async getStateNow(): Promise<boolean> {
