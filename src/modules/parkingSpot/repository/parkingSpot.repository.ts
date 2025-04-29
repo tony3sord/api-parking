@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { User } from 'src/modules/user/entities/user.entity';
+import { Parking } from 'src/modules/parking/entities/parking.entity';
 dotenv.config();
 
 @Injectable()
@@ -14,7 +15,11 @@ export class ParkingSpotRepository {
     private readonly dataSource: EntityManager,
   ) {}
 
-  async reqParkCar(createParkingSpotDto: CreateParkingSpotDto, user: User) {
+  async reqParkCar(
+    createParkingSpotDto: CreateParkingSpotDto,
+    user: User,
+    parking: Parking,
+  ) {
     const parkRepository = this.dataSource.getRepository(ParkingSpot);
 
     const reservationDateObj = new Date(createParkingSpotDto.reservationDate);
@@ -30,6 +35,7 @@ export class ParkingSpotRepository {
       ...createParkingSpotDto,
       reservationFinish: reservationFinishUTC,
       user: user,
+      parking,
     };
 
     const newReqParking = parkRepository.create(park);
