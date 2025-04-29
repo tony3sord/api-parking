@@ -19,11 +19,8 @@ export class Parking {
   @Column()
   ability: number;
 
-  @OneToMany(() => ParkingSpot, (parkingSpot) => parkingSpot.id, {
-    onDelete: 'CASCADE',
-    eager: false,
-  })
-  parkingSpot: ParkingSpot;
+  @OneToMany(() => ParkingSpot, (parkingSpot) => parkingSpot.parking, {})
+  parkingSpot: ParkingSpot[];
 
   @CreateDateColumn()
   createdAt: Date;
