@@ -1,9 +1,9 @@
 import { EntityManager } from 'typeorm';
 import { Parking } from '../entities/parking.entity';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
-import { CreateParkingDto } from '../dto';
+import { CreateParkingDto, UpdateParkingDto } from '../dto';
 dotenv.config();
 
 @Injectable()
@@ -36,5 +36,29 @@ export class ParkingRepository {
       .execute();
 
     return result.raw[0];
+  }
+
+  async getParking(id: number): Promise<Parking> {
+    const parkRepository = this.dataSource.getRepository(Parking);
+    return await parkRepository
+      .createQueryBuilder('parking')
+      .where('id = :id', { id })
+      .getOne();
+  }
+
+  async updateParking(
+    id: number,
+    updateParkingDto: UpdateParkingDto,
+  ): Promise<Parking> {
+    const parkRepository = this.dataSource.getRepository(Parking);
+
+    const parking = await parkRepository.findOneBy({ id });
+    if (!parking) {
+      throw new NotFoundException(`Parking with ID ${id} not found`);
+    }
+
+    Object.assign(parking, updateParkingDto);
+
+    return await parkRepository.save(parking);
   }
 }
