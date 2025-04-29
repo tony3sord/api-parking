@@ -3,23 +3,23 @@ import { CreateParkingDto, UpdateParkingDto } from '../dto/index';
 
 @Injectable()
 export class ParkingService {
-  create(createParkingDto: CreateParkingDto) {
+  async create(createParkingDto: CreateParkingDto) {
     return 'This action adds a new parking';
   }
 
-  findAll() {
+  async findAll() {
     return `This action returns all parking`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} parking`;
   }
 
-  update(id: number, updateParkingDto: UpdateParkingDto) {
+  async update(id: number, updateParkingDto: UpdateParkingDto) {
     return `This action updates a #${id} parking`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} parking`;
   }
 }
