@@ -16,6 +16,9 @@ export class Parking {
   @Column()
   name: string;
 
+  @Column()
+  ability: number;
+
   @OneToMany(() => ParkingSpot, (parkingSpot) => parkingSpot.id, {
     onDelete: 'CASCADE',
     eager: false,
