@@ -11,7 +11,13 @@ import { ParkingService } from '../service/parking.service';
 import { CreateParkingDto, UpdateParkingDto } from '../dto/index';
 import { Roles } from 'src/common/decorators/roles.decorators';
 import { RolesEnum } from 'src/common/enums/roles.enum';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @ApiTags('Parking')
 @Controller('parking')
@@ -64,6 +70,29 @@ export class ParkingController {
   }
 
   @Get(':id')
+  @Roles(RolesEnum.Client, RolesEnum.Admin)
+  @ApiOperation({
+    summary: 'Retrieve a specific parking',
+    description: 'Fetches the details of a specific parking by its ID.',
+  })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: 'The unique identifier of the parking to retrieve.',
+    type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'The parking details have been successfully retrieved.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Not Found. No parking found with the specified ID.',
+  })
   async findOne(@Param('id') id: string) {
     return await this.parkingService.findOne(+id);
   }
