@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+      - mongo
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/postgres
+      - MONGODB_URL=mongodb://mongo:27017/mydatabase
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_PASSWORD=password
+
+  mongo:
+    image: mongo:7.0
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
