@@ -8,6 +8,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+import { Parking } from 'src/modules/parking/entities/parking.entity';
 
 @Entity()
 export class ParkingSpot {
@@ -28,9 +29,15 @@ export class ParkingSpot {
 
   @ManyToOne(() => User, (user) => user.id, {
     onDelete: 'CASCADE',
-    eager: false, // No cargar automáticamente la información del usuario
+    eager: false,
   })
   user: User;
+
+  @ManyToOne(() => Parking, (parking) => parking.id, {
+    onDelete: 'CASCADE',
+    eager: false,
+  })
+  parking: Parking;
 
   @CreateDateColumn()
   createdAt: Date;
