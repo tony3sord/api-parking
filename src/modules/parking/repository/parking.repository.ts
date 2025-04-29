@@ -4,6 +4,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { CreateParkingDto, UpdateParkingDto } from '../dto';
+import { ParkingSpot } from 'src/modules/parkingSpot/entities/parkingSpot.entity';
 dotenv.config();
 
 @Injectable()
@@ -13,8 +14,7 @@ export class ParkingRepository {
     private readonly dataSource: EntityManager,
   ) {}
   async getParkings(): Promise<Parking[]> {
-    const parkRepository = this.dataSource.getRepository(Parking);
-    return await parkRepository.find();
+    return this.dataSource.getRepository(Parking).find();
   }
 
   async getParkingForName(name: string): Promise<Parking> {
@@ -40,10 +40,25 @@ export class ParkingRepository {
 
   async getParking(id: number): Promise<Parking> {
     const parkRepository = this.dataSource.getRepository(Parking);
-    return await parkRepository
+
+    const parking: Parking = await parkRepository
       .createQueryBuilder('parking')
-      .where('id = :id', { id })
+      .leftJoinAndSelect(
+        'parking.parkingSpot',
+        'parkingspot',
+        'parkingspot.reservationDate < :dateNow AND parkingspot.reservationFinish > :dateNow',
+        { dateNow: new Date() },
+      )
+      .where('parking.id = :id', { id })
       .getOne();
+
+    const dataFullParking = {
+      ...parking,
+      available: parking.ability - parking.parkingSpot.length,
+      occupied: parking.parkingSpot.length,
+    };
+
+    return dataFullParking;
   }
 
   async updateParking(
