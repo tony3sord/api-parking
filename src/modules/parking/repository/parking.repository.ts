@@ -15,4 +15,12 @@ export class ParkingRepository {
     const parkRepository = this.dataSource.getRepository(Parking);
     return await parkRepository.find();
   }
+
+  async getParkingForName(name: string): Promise<Parking> {
+    return this.dataSource
+      .getRepository(Parking)
+      .createQueryBuilder('parking')
+      .where('parking.name = :name', { name })
+      .getOne();
+  }
 }
