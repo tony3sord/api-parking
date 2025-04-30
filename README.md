@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Practical exercise to demonstrate knowledge to Guajiritos S.R.L. [Guajiritos S.R.L](https://www.guajiritos.com/)
 
 ## Project setup
 
