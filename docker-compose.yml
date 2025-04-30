@@ -8,16 +8,18 @@ services:
       - db
       - mongo
     environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/postgres
-      - MONGODB_URL=mongodb://mongo:27017/mydatabase
+      - DATABASE_URL=postgres://postgres:password@db:5432/db_name
+      - MONGODB_URL=mongodb://mongo:27017/parking-logs
 
   db:
-    image: postgres:15
+    image: bitnami/postgresql:latest
     environment:
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=Parking
 
   mongo:
-    image: mongo:7.0
+    image: mongo
+    restart: always
     ports:
       - '27017:27017'
     environment:
