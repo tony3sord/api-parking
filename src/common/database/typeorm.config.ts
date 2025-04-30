@@ -20,6 +20,7 @@ export const databaseProviders: {
     database: process.env.POSTGRES_DB_NAME,
     entities: [User, ParkingSpot, Parking],
     synchronize: process.env.NODE_ENV === 'production' ? false : true,
+    url: process.env.DATABASE_URL ?? undefined,
   },
 
   // Configuración para MongoDB
@@ -28,10 +29,11 @@ export const databaseProviders: {
     type: 'mongodb',
     host: process.env.MONGO_DB_HOST,
     port: parseInt(process.env.MONGO_DB_PORT as string) || 27017,
-    // username: process.env.MONGO_DB_USER,
-    // password: process.env.MONGO_DB_PASSWORD,
-    database: process.env.MONGO_DB_NAME,
+    username: process.env.MONGO_DB_USER,
+    password: process.env.MONGO_DB_PASSWORD ?? undefined,
+    database: process.env.MONGO_DB_NAME ?? undefined,
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     synchronize: process.env.NODE_ENV === 'production' ? false : true,
+    url: process.env.MONGODB_URL ?? undefined,
   },
 };
