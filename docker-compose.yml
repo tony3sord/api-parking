@@ -4,24 +4,23 @@ services:
     build: .
     ports:
       - '3000:3000'
-    depends_on:
-      - db
-      - mongo
     environment:
-      - DATABASE_URL=postgres://postgres:password@db:5432/db_name
-      - MONGODB_URL=mongodb://mongo:27017/parking-logs
+      - DATABASE_URL=postgres://postgres:hola@192.168.47.171:5434/postgres
+      - MONGODB_URL=mongodb://root:example@192.168.47.171:27017/parking-logs?authSource=admin
 
   db:
     image: bitnami/postgresql:latest
+    ports:
+      - '5434:5432'
     environment:
-      - POSTGRESQL_PASSWORD=postgres
-      - POSTGRESQL_DATABASE=Parking
+      - POSTGRESQL_PASSWORD=hola
+      - POSTGRESQL_DATABASE=postgres
 
   mongo:
     image: mongo
     restart: always
-    ports:
-      - '27017:27017'
+    container_name: MongoDB
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
+      - MONGO_INITDB_DATABASE=parking-logs
