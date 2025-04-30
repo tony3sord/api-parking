@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Headers,
+  UseGuards,
 } from '@nestjs/common';
 import { ParkingService } from '../service/parking.service';
 import { CreateParkingDto, UpdateParkingDto } from '../dto/index';
@@ -18,8 +20,10 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @ApiTags('Parking')
+@UseGuards(RolesGuard)
 @Controller('parking')
 export class ParkingController {
   constructor(private readonly parkingService: ParkingService) {}
