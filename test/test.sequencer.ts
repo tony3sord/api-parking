@@ -8,7 +8,6 @@ class CustomSequencer extends Sequencer {
       'auth.controller.e2e-spec.ts',
       'parking.controller.e2e-spec.ts',
       'user.update.e2e-spec.ts',
-      'get.parking.controller.e2e-spec.ts',
       'parkingSpot.controller.e2e-spec.ts',
       'delete.parking.controller.e2e-spec.ts',
       'user.delete.e2e-spec.ts',
