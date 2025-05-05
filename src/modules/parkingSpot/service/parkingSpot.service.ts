@@ -8,8 +8,8 @@ import { ParkingSpotRepository } from '../repository/parkingSpot.repository';
 import { ParkingSpot } from '../entities/parkingSpot.entity';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../../user/repository/user.repository';
-import { ParkingService } from 'src/modules/parking/service/parking.service';
-import { Parking } from 'src/modules/parking/entities/parking.entity';
+import { ParkingService } from '../../parking/service/parking.service';
+import { Parking } from '../../parking/entities/parking.entity';
 
 @Injectable()
 export class ParkingSpotService {

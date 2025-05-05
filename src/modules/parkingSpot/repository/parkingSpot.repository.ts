@@ -4,8 +4,8 @@ import { CreateParkingSpotDto } from '../dto';
 import { Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
-import { User } from 'src/modules/user/entities/user.entity';
-import { Parking } from 'src/modules/parking/entities/parking.entity';
+import { User } from '../../user/entities/user.entity';
+import { Parking } from '../../parking/entities/parking.entity';
 dotenv.config();
 
 @Injectable()

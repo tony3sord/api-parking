@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ParkingService } from '../service/parking.service';
 import { CreateParkingDto, UpdateParkingDto } from '../dto/index';
-import { Roles } from 'src/common/decorators/roles.decorators';
-import { RolesEnum } from 'src/common/enums/roles.enum';
+import { Roles } from '../../../common/decorators/roles.decorators';
+import { RolesEnum } from '../../../common/enums/roles.enum';
 import {
   ApiBody,
   ApiOperation,
@@ -19,7 +19,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { RolesGuard } from 'src/common/guards/roles.guard';
+import { RolesGuard } from '../../../common/guards/roles.guard';
 
 @ApiTags('Parking')
 @UseGuards(RolesGuard)
