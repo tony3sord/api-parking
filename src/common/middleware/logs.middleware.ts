@@ -1,6 +1,8 @@
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { LogService } from '../logs/logs.service';
+import { AuthService } from '../../modules/auth/service/auth.service';
+import { User } from '../../modules/user/entities/user.entity';
 
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
@@ -33,10 +35,7 @@ export class LoggerMiddleware implements NestMiddleware {
           originalUrl,
           statusCode,
           duration,
-<<<<<<< HEAD
           user !== null ? user.username : null,
-=======
->>>>>>> dc6140b (feat: Enhance LoggerMiddleware to include user information in logs)
         );
       }
     });
