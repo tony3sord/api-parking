@@ -29,6 +29,15 @@ export class ParkingService {
     }
   }
 
+  async getLogs() {
+    try {
+      return await this.parkingRepository.getLogs();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async findOne(id: number) {
     try {
       return await this.parkingRepository.getParking(id);
