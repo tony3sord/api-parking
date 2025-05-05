@@ -24,7 +24,8 @@ export class LogService {
       duration,
       userId,
     });
-
-    await this.entityManager.save(log);
+    if (process.env.NODE_ENV !== 'test') {
+      await this.entityManager.save(log);
+    }
   }
 }
