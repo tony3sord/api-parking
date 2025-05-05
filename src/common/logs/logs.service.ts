@@ -15,12 +15,14 @@ export class LogService {
     url: string,
     statusCode: number,
     duration: number,
+    userId: string | null,
   ) {
     const log = this.entityManager.create(Log, {
       method,
       url,
       statusCode,
       duration,
+      userId,
     });
 
     await this.entityManager.save(log);
