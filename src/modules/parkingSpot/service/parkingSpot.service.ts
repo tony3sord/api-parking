@@ -56,8 +56,4 @@ export class ParkingSpotService {
   async createParkingSpace(): Promise<boolean> {
     return await this.parkingSpotRepository.getStateNow();
   }
-
-  async getLogs(): Promise<ParkingSpot[]> {
-    return await this.parkingSpotRepository.getLogsForAdmin();
-  }
 }

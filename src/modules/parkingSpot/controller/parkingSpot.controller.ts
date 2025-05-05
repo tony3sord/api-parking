@@ -75,24 +75,4 @@ export class ParkingController {
   async getState() {
     return this.parkingService.getState();
   }
-
-  @Get('logs')
-  @Roles(RolesEnum.Admin)
-  @ApiOperation({
-    summary: 'Get parking logs',
-    description:
-      'Returns a list of all parking logs, including details of reservations.',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'The list of logs of the parking.',
-    type: [ParkingSpot],
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized. Token is missing or invalid.',
-  })
-  async getLogs(): Promise<ParkingSpot[]> {
-    return this.parkingService.getLogs();
-  }
 }
