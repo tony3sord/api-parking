@@ -20,6 +20,9 @@ export class Log {
   @Column()
   statusCode: number;
 
+  @Column({ nullable: true })
+  userId: string | null;
+
   @Column()
   duration: number;
 
