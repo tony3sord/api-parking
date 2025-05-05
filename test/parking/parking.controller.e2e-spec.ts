@@ -43,6 +43,8 @@ describe('ParkingController (e2e)', () => {
         expect.objectContaining({
           id: expect.any(Number),
           ...createParkingDTOTest,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
         }),
       );
     }
