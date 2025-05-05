@@ -1,4 +1,3 @@
-import { ParkingSpot } from 'src/modules/parkingSpot/entities/parkingSpot.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +5,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   Index,
-  OneToOne,
 } from 'typeorm';
 
 @Entity('user')
