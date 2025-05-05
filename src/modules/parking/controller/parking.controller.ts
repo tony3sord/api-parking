@@ -72,6 +72,20 @@ export class ParkingController {
     return await this.parkingService.findAll();
   }
 
+  @Get('/logs')
+  @Roles(RolesEnum.Admin)
+  @ApiResponse({
+    status: 200,
+    description: 'Get the logs of the parkings.',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized. Token is missing or invalid.',
+  })
+  async Logs() {
+    return await this.parkingService.getLogs();
+  }
+
   @Get(':id')
   @Roles(RolesEnum.Client, RolesEnum.Worker, RolesEnum.Admin)
   @ApiOperation({
