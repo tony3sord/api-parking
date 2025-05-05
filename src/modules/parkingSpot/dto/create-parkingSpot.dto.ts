@@ -6,6 +6,7 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
+import { IsFutureDate } from '../../../common/decorators/is-future-date.decorator';
 
 export class CreateParkingSpotDto {
   @ApiProperty({
@@ -22,6 +23,7 @@ export class CreateParkingSpotDto {
     example: '2025-04-26T14:30:00Z',
   })
   @IsDateString()
+  @IsFutureDate()
   reservationDate: string;
 
   @ApiProperty({
