@@ -43,10 +43,16 @@ describe('ParkingController (e2e)', () => {
     ).id;
 
     if (response.status === 200) {
-      expect(response.body[0]).toEqual(
+      const parkingWithNameTest = response.body.find(
+        (parking) => parking.name === createParkingDTOTest.name,
+      );
+
+      expect(parkingWithNameTest).toEqual(
         expect.objectContaining({
           id: expect.any(Number),
           ...createParkingDTOTest,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
         }),
       );
     }
