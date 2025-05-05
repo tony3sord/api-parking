@@ -79,14 +79,4 @@ export class ParkingSpotRepository {
 
     return state > 0;
   }
-
-  async getLogsForAdmin(): Promise<ParkingSpot[]> {
-    const parkRepository = this.dataSource.getRepository(ParkingSpot);
-
-    const logs = await parkRepository
-      .createQueryBuilder('parking_spot')
-      .getMany();
-
-    return logs;
-  }
 }
