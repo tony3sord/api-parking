@@ -4,7 +4,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { CreateParkingDto, UpdateParkingDto } from '../dto';
-import { ParkingSpot } from 'src/modules/parkingSpot/entities/parkingSpot.entity';
 dotenv.config();
 
 @Injectable()
