@@ -3,24 +3,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   UseGuards,
   Headers,
 } from '@nestjs/common';
 import { ParkingSpotService } from '../service/parkingSpot.service';
-import { CreateParkingSpotDto, UpdateParkingSpotDto } from '../dto/index';
+import { CreateParkingSpotDto } from '../dto/index';
 import { RolesGuard } from '../../../common/guards/roles.guard';
 import { Roles } from '../../../common/decorators/roles.decorators';
 import { RolesEnum } from '../../../common/enums/roles.enum';
-import {
-  ApiBody,
-  ApiHeader,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ParkingSpot } from '../entities/parkingSpot.entity';
 
 @ApiTags('ParkingSpot')
@@ -103,23 +94,5 @@ export class ParkingController {
   })
   async getLogs(): Promise<ParkingSpot[]> {
     return this.parkingService.getLogs();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.parkingService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateParkingDto: UpdateParkingSpotDto,
-  ) {
-    return this.parkingService.update(+id, updateParkingDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.parkingService.remove(+id);
   }
 }
