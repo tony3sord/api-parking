@@ -9,7 +9,7 @@ import { createParkingDTOTest } from '../parking/createParking.objects';
 
 describe('ParkingController (e2e)', () => {
   let app: INestApplication;
-  let parkingId: number;
+  let parking;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -39,15 +39,17 @@ describe('ParkingController (e2e)', () => {
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
       .expect(200);
 
-    parkingId = response.body.find(
-      (p) => p.name === createParkingDTOTest.name,
-    ).id;
-
     if (response.status === 200) {
-      expect(response.body[0]).toEqual(
+      parking = response.body.find(
+        (parking) => parking.name === createParkingDTOTest.name,
+      );
+
+      expect(parking).toEqual(
         expect.objectContaining({
           id: expect.any(Number),
           ...createParkingDTOTest,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
         }),
       );
     }
@@ -57,7 +59,7 @@ describe('ParkingController (e2e)', () => {
     const response = await request(app.getHttpServer())
       .post('/api/parkingSpot')
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Client]}`)
-      .send({ ...createParkingSpotDTOTest, parking: parkingId })
+      .send({ ...createParkingSpotDTOTest, parking: parking.id })
       .expect(201);
 
     if (response.status === 201) {
