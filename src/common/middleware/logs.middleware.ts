@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { LogService } from '../logs/logs.service';
-import { AuthService } from 'src/modules/auth/service/auth.service';
+import { AuthService } from '../../modules/auth/service/auth.service';
 import { User } from 'src/modules/user/entities/user.entity';
 
 @Injectable()

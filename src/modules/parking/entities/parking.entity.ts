@@ -6,8 +6,7 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { ParkingSpot } from 'src/modules/parkingSpot/entities/parkingSpot.entity';
-
+import { ParkingSpot } from '../../parkingSpot/entities/parkingSpot.entity';
 @Entity()
 export class Parking {
   @PrimaryGeneratedColumn()

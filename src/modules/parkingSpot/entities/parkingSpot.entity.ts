@@ -7,7 +7,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
-import { Parking } from 'src/modules/parking/entities/parking.entity';
+import { Parking } from '../../parking/entities/parking.entity';
 
 @Entity()
 export class ParkingSpot {
