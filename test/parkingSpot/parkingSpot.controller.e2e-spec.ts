@@ -5,9 +5,11 @@ import { AppModule } from '../../src/app.module';
 import { createParkingSpotDTOTest } from './create.parkingSpot.objects';
 import { tokensByRole } from '../auth/auth.controller.e2e-spec';
 import { RolesEnum } from '../../src/common/enums/roles.enum';
+import { createParkingDTOTest } from '../parking/createParking.objects';
 
 describe('ParkingController (e2e)', () => {
   let app: INestApplication;
+  let parkingId: number;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -31,41 +33,63 @@ describe('ParkingController (e2e)', () => {
     await app.close();
   });
 
-  it('/api/parkingSpot (POST) - should create a parking spot', async () => {
+  it('/api/parking (GET) - should create a parking spot', async () => {
     const response = await request(app.getHttpServer())
-      .post('/api/parkingSpot')
-      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Client]}`)
-      .send(createParkingSpotDTOTest)
-      .expect([201, 409]); // 201: Created, 409: Conflict if parking spot already taken
+      .get('/api/parking')
+      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
+      .expect(200);
 
-    if (response.status === 201) {
-      expect(response.body).toEqual(
+    parkingId = response.body.find(
+      (p) => p.name === createParkingDTOTest.name,
+    ).id;
+
+    if (response.status === 200) {
+      expect(response.body[0]).toEqual(
         expect.objectContaining({
           id: expect.any(Number),
-          ...createParkingSpotDTOTest,
+          ...createParkingDTOTest,
         }),
       );
     }
   });
 
-  it('/api/parking/logs (GET) - should retrieve parking logs', async () => {
+  it('/api/parkingSpot (POST) - should create a parking spot', async () => {
     const response = await request(app.getHttpServer())
-      .get('/api/parking/logs')
-      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
-      .expect(200); // 200: OK
+      .post('/api/parkingSpot')
+      .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Client]}`)
+      .send({ ...createParkingSpotDTOTest, parking: parkingId })
+      .expect(201);
 
-    response.body.forEach((parkingLog) => {
-      expect(parkingLog).toEqual(
+    if (response.status === 201) {
+      expect(response.body).toEqual(
         expect.objectContaining({
           id: expect.any(Number),
-          vehicleDetails: expect.any(String),
           reservationDate: expect.any(String),
           reservationTime: expect.any(Number),
           reservationFinish: expect.any(String),
+          vehicleDetails: expect.any(String),
           createdAt: expect.any(String),
           updatedAt: expect.any(String),
+          parking: expect.objectContaining({
+            id: expect.any(Number),
+            name: expect.any(String),
+            ability: expect.any(Number),
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
+          }),
+          user: expect.objectContaining({
+            id: expect.any(Number),
+            name: expect.any(String),
+            lastname: expect.any(String),
+            email: expect.any(String),
+            username: expect.any(String),
+            phone: expect.any(String),
+            role: expect.any(String),
+            createdAt: expect.any(String),
+            updatedAt: expect.any(String),
+          }),
         }),
       );
-    });
+    }
   });
 });
