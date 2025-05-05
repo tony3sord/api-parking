@@ -52,13 +52,15 @@ describe('ParkingController (e2e)', () => {
     const response = await request(app.getHttpServer())
       .get('/api/parking/logs')
       .set('Authorization', `Bearer ${tokensByRole[RolesEnum.Admin]}`)
-      .expect(200); // 200: OK
+      .expect(200);
 
     response.body.forEach((parkingLog) => {
       expect(parkingLog).toEqual(
         expect.objectContaining({
           id: expect.any(Number),
           ability: expect.any(Number),
+          name: expect.any(String),
+          parkingSpot: expect.any(Array),
           createdAt: expect.any(String),
           updatedAt: expect.any(String),
         }),
