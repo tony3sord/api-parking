@@ -36,7 +36,7 @@ export class UserRepository {
       .createQueryBuilder('user')
       .where({ id: id })
       .getOne();
-    if (!user) throw new NotFoundException();
+    if (!user) throw new NotFoundException('User not found');
     return user;
   }
 
