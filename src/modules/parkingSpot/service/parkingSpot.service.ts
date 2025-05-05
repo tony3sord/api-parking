@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateParkingSpotDto, UpdateParkingSpotDto } from '../dto/index';
+import { CreateParkingSpotDto } from '../dto/index';
 import { ParkingSpotRepository } from '../repository/parkingSpot.repository';
 import { ParkingSpot } from '../entities/parkingSpot.entity';
 import { JwtService } from '@nestjs/jwt';
@@ -59,17 +59,5 @@ export class ParkingSpotService {
 
   async getLogs(): Promise<ParkingSpot[]> {
     return await this.parkingSpotRepository.getLogsForAdmin();
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} parking`;
-  }
-
-  update(id: number, updateParkingSpotDto: UpdateParkingSpotDto) {
-    return `This action updates a #${id} parking`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} parking`;
   }
 }
