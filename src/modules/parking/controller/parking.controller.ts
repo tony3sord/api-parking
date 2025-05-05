@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Headers,
   UseGuards,
 } from '@nestjs/common';
 import { ParkingService } from '../service/parking.service';
