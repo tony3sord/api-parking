@@ -39,7 +39,6 @@ export class ParkingRepository {
 
   async getParking(id: number): Promise<Parking> {
     const parkRepository = this.dataSource.getRepository(Parking);
-
     const parking: Parking = await parkRepository
       .createQueryBuilder('parking')
       .leftJoinAndSelect(
@@ -51,6 +50,9 @@ export class ParkingRepository {
       .where('parking.id = :id', { id })
       .getOne();
 
+    if (!parking) {
+      throw new NotFoundException(`Parking with ID ${id} not found`);
+    }
     const dataFullParking = {
       ...parking,
       available: parking.ability - parking.parkingSpot.length,
