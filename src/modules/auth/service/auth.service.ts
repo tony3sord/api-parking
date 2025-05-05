@@ -62,6 +62,7 @@ export class AuthService {
         secret: process.env.JWT_SECRET,
       });
     } catch (e) {
+      console.log(e);
       throw new UnauthorizedException('Invalid token');
     }
   }
