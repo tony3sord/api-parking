@@ -87,7 +87,7 @@ export class ParkingController {
   }
 
   @Get(':id')
-  @Roles(RolesEnum.Client, RolesEnum.Worker, RolesEnum.Admin)
+  @Roles(RolesEnum.Worker)
   @ApiOperation({
     summary: 'Retrieve a specific parking',
     description: 'Fetches the details of a specific parking by its ID.',
