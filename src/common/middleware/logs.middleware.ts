@@ -33,7 +33,10 @@ export class LoggerMiddleware implements NestMiddleware {
           originalUrl,
           statusCode,
           duration,
+<<<<<<< HEAD
           user !== null ? user.username : null,
+=======
+>>>>>>> dc6140b (feat: Enhance LoggerMiddleware to include user information in logs)
         );
       }
     });
