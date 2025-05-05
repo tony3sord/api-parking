@@ -16,6 +16,15 @@ export class ParkingRepository {
     return this.dataSource.getRepository(Parking).find();
   }
 
+  async getLogs(): Promise<Parking[]> {
+    const repository = this.dataSource.getRepository(Parking);
+    const query = repository
+      .createQueryBuilder('parking')
+      .leftJoinAndSelect('parking.parkingSpot', 'parkingSpot');
+
+    return await query.getMany();
+  }
+
   async getParkingForName(name: string): Promise<Parking> {
     return this.dataSource
       .getRepository(Parking)
